@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.calculateButton.setOnClickListener { calculateTip() }
@@ -20,13 +21,8 @@ class MainActivity : AppCompatActivity() {
     private fun calculateTip() {
         val stringInTextField = binding.costOfService.text.toString()
         val cost = stringInTextField.toDoubleOrNull()
-        fun displayTip(tip : Double) {
-            val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
-            binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
-
-        if (cost == null || cost == 0.0) {
-            displayTip(0.0)
-            binding.tipResult.text
+        if (cost == null) {
+            binding.tipResult.text = ""
             return
         }
 
@@ -40,9 +36,10 @@ class MainActivity : AppCompatActivity() {
             tip = ceil(tip)
         }
 
-        displayTip(tip)
+        //displayTip(tip)
 
-        NumberFormat.getCurrencyInstance()
-        }
+        val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
+        binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
+
     }
 }
